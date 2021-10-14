@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+# This python script converts the current Jekyll base website into Nikola.
+# This very simple tool ASSUMES we are using git for version control (so
+# we don't have to worry about versioning changes).
+
+# NOTE: we make changes IN PLACE!!!
+
+import argparse
+import pathlib
+import sys
+
+parser = argparse.ArgumentParser(description="Convert Jekyll pages into Nikola.")
+parser.add_argument('pagesDir', type=str, help="The pages directory to convert")
+args = parser.parse_args()
+
+pagesDir = str(args.pagesDir)
+
+pagesDir = pathlib.Path(pagesDir)
+
+pages = list(pagesDir.glob("**/*.md"))
+pages.extend(list(pagesDir.glob("**/*.html")))
+
+for aPage in pages :
+  print("working on {}".format(aPage))
+  contents = aPage.read_text()
+  contents = contents.replace('layout: page',    'template: page.tmpl')
+  contents = contents.replace('layout: null',    'template: emptyPage.tmpl')
+  contents = contents.replace('layout: default', 'template: base.tmpl')
+  aPage.write_text(contents)

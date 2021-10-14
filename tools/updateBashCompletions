@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# This bash script updates a user's .bash_profile.d with the nikola
+# command line completions.
+
+nikola tabcompletion --shell bash --hardcode-tasks > $HOME/.bash_profile.d/nikola.all.sh

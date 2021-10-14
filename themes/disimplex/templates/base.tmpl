@@ -1,0 +1,54 @@
+## -*- coding: utf-8 -*-
+<%namespace name="base" file="base_helper.tmpl" import="*" />
+<%namespace name="notes" file="annotation_helper.tmpl" import="*" />
+${set_locale(lang)}
+${base.html_headstart()}
+<!--#include virtual="/partials/head.html" -->
+<%block name="extra_head">
+### Leave this block alone.
+</%block>
+${template_hooks['extra_head']()}
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">${messages("Skip to main content")}</a>
+
+
+<!--#include virtual="/partials/header.html" -->
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        % if theme_config.get('sidebar'):
+            <div class="row"><div class="col-md-8 blog-main">
+        % endif
+        <!--Body content-->
+        ${template_hooks['page_header']()}
+        <%block name="extra_header"></%block>
+        <%block name="content"></%block>
+        <!--End of body content-->
+        % if theme_config.get('sidebar'):
+        </div><aside class="col-md-4 blog-sidebar">${theme_config.get('sidebar')}</aside></div>
+        % endif
+
+<!--#include virtual="/partials/footer.html" -->
+    </div>
+</div>
+
+${base.late_load_js()}
+    %if date_fanciness != 0:
+        <!-- fancy dates -->
+        <script>
+        luxon.Settings.defaultLocale = "${luxon_locales[lang]}";
+        fancydates(${date_fanciness}, ${luxon_date_format});
+        </script>
+        <!-- end fancy dates -->
+    %endif
+    <%block name="extra_js"></%block>
+    <script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+${body_end}
+${template_hooks['body_end']()}
+</body>
+</html>

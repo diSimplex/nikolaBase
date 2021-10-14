@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# This bash script uses lighttpd to server Nikola sites which use the
+# diSimplex theme (and hence make essential use of server side includes).
+
+# You MUST have installed the lighttpd server....
+#    sudo apt install lighttpd
+
+# You MUST run this in the base directory of a project
+
+cat << EOF > /tmp/serveWithSSI_lighttpd.conf
+server.document-root = "$(pwd)/output"
+
+server.port = 8000
+
+mimetype.assign = (
+  ".html" => "text/html",
+  ".txt" => "text/plain",
+  ".jpg" => "image/jpeg",
+  ".png" => "image/png",
+  ".css" => "text/css"
+
+)
+
+server.modules = ( "mod_ssi" )
+
+index-file.names = ( "index.html" )
+
+ssi.extension = (".html")
+EOF
+
+echo ""
+echo "http://0.0.0.0:8000"
+echo ""
+
+lighttpd -D -f /tmp/serveWithSSI_lighttpd.conf

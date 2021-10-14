@@ -1,0 +1,12 @@
+[Core]
+name = render_partials
+module = partials
+
+[Documentation]
+author = The diSimplex authors
+version = 1.0
+website = https://github.com/diSimplex
+description = Create html server side include partials in the output.
+
+[Nikola]
+PluginCategory = Task

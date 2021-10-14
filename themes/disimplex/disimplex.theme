@@ -1,0 +1,12 @@
+[Theme]
+engine = mako
+parent = bootblog4
+author = The diSimplex authors
+author_url = https://github.com/diSimplex
+license = Apache v2.0
+based_on = Bootstrap 4 <http://getbootstrap.com/>, Bootstrap 4 blog example <http:>
+tags = bootstrap
+
+[Family]
+family = disimplex
+#jinja_version = bootblog4-jinja

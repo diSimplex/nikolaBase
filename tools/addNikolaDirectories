@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This bash script adds the Nikola directories to an existing site...
+
+if test -f conf.py ; then
+  mv conf.py conf.py.$(date +%Y-%m-%d_%H-%M-%S)
+fi
+
+toolFiles="$(dirname $0)/files"
+cp $toolFiles/conf.py .
+
+mkdir -p files
+mkdir -p galleries
+mkdir -p images
+mkdir -p listings
+mkdir -p pages
+mkdir -p posts
