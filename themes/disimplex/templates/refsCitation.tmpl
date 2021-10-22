@@ -1,0 +1,57 @@
+## -*- coding: utf-8 -*-
+<%namespace name="refs" file="refsHelper.tmpl" import="*" />
+<%inherit file="base.tmpl"/>
+
+<%block name="content">
+<div class="citation">
+
+  <header class="citation-header">
+    <h1 class="citation-title">${ title }</h1>
+  </header>
+
+  <a href="/refs/${ biblatexUrl }">BibLaTeX</a>
+  <a href="/refs/${ bibcontextUrl }">BibConTeXt(lua)</a>
+
+  <article class="citation-fields">
+    <table>
+      % for aField in data['citationFieldOrder']['order'] :
+        % if (aField in biblatex) and (biblatex[aField] is not None) :
+      <tr><!-- ${ aField } -->
+        <% outputMap = data['citationFieldOrder']['outputMap'] %>
+          % if (aField in outputMap) and (outputMap[aField] is not None) :
+          <% aFieldOutputMap = outputMap[aField] %>
+            % if 'text' in aFieldOutputMap :
+        <th>${ aFieldOutputMap['text'] }:</t>
+            % else :
+        <th>${ aField }:</th>
+            % endif
+            % if 'include' in aFieldOutputMap :
+        <td>
+            <% fieldValue = biblatex[aField] %>
+            % if fieldValue is not None :
+              <% templateName = aFieldOutputMap['include'] %>
+              ${getattr(refs, templateName)(fieldValue) }
+            % endif
+        </td>
+            % else :
+        <td>${ biblatex[aField] }</td>
+            % endif
+          % else :
+        <th>${ aField }:</th>
+        <td>${ biblatex[aField] }</td>
+      </tr>
+          % endif
+        % endif
+      % endfor
+    </table>
+  </article>
+
+  <hr>
+
+  <article class="citation-content">
+    ${ bodyText }
+  </article>
+
+</div>
+
+</%block>

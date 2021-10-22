@@ -8,8 +8,19 @@
 
 # You MUST run this in the base directory of a project
 
-cat << EOF > /tmp/serveWithSSI_lighttpd.conf
-server.document-root = "$(pwd)/output"
+websitePath=$(dirname $(pwd))
+websiteName=$(basename $websitePath)
+
+mkdir -p /tmp/nikolaTests/$websiteName
+
+echo "------------------------------------------------------------------"
+nikola build
+echo "------------------------------------------------------------------"
+nikola deploy test
+echo "------------------------------------------------------------------"
+
+cat << EOF > /tmp/nikolaTests/${websiteName}.conf
+server.document-root = "/tmp/nikolaTests/${websiteName}"
 
 server.port = 8000
 
@@ -33,4 +44,4 @@ echo ""
 echo "http://0.0.0.0:8000"
 echo ""
 
-lighttpd -D -f /tmp/serveWithSSI_lighttpd.conf
+lighttpd -D -f /tmp/nikolaTests/${websiteName}.conf

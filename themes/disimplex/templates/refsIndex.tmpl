@@ -1,0 +1,48 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.tmpl"/>
+
+<%block name="content">
+<div class="index">
+
+  <header class="index-header">
+    <h1 class="index-title">${ title }</h1>
+  </header>
+
+  % if 0 < len(rootIndex) :
+  <div>
+    % for aLink, aText in rootIndex :
+    <a href="/refs/${ md2html(aLink) }">${ aText }</a>
+    % endfor
+  </div>
+
+  <div>
+    % for aLink, aText in subIndex :
+    <a href="/refs/${ md2html(aLink) }">${ aText }</a>
+    % endfor
+  </div>
+
+  <div>
+    <ul>
+      % for anIndexList in index :
+      <li>
+        <a href="/refs/${ md2html(anIndexList[0]) }">${ anIndexList[1] }</a>
+        % if 2 < len(anIndexList) :
+          <br>${ anIndexList[2] }
+        % endif
+      </li>
+      % endfor
+    </ul>
+  </div>
+
+  % else :
+
+  <div>
+    % for aLink, aText in index :
+    <a href="/refs/${ md2html(aLink) }">${ aText }</a>
+    % endfor
+  </div>
+
+  % endif
+
+</div>
+</%block>

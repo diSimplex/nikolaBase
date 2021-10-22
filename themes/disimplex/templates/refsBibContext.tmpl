@@ -1,0 +1,22 @@
+## -*- coding: utf-8 -*-
+<%namespace name="refs" file="refsHelper.tmpl" import="*" />
+
+return {
+  category = [=[${ biblatex['entrytype'] }]=],
+  tag      = [=[${ biblatex['citekey'] }]=],
+<%
+  for aField in data['biblatexFieldOrder']['order'] :
+    if aField in biblatex :
+      fieldValue = biblatex[aField]
+      if fieldValue is not None and (
+        not isinstance(fieldValue, list) or 0 < len(fieldValue)
+      ) :
+        fieldMap   = data['biblatexFieldOrder']['outputMap'][aField]
+        if fieldMap is not None and 'include' in fieldMap :
+          templateName = fieldMap['include']
+          context.write(f"  {aField} = [=[")
+          getattr(refs, templateName)(fieldValue)
+          context.write("  ]=],\n")
+        else :
+          context.write(f"  {aField} = [=[{fieldValue}]=],\n")
+%>}

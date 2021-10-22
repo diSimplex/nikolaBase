@@ -1,0 +1,100 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.tmpl"/>
+
+<%block name="content">
+<div class="author">
+
+  <header class="author-header">
+    <h1 class="author-title">${ title }</h1>
+  </header>
+
+  <article class="author-fields">
+    <table>
+      % if biblatex['cleanname'] is not None :
+      <tr>
+        <th>clean name:</th>
+        <td>${ biblatex['cleanname'] }</td>
+      </tr>
+       % endif
+      % if biblatex['synonymOf'] is not None :
+      <tr>
+        <th>synonym of:</th>
+        <td>${ biblatex['synonymOf'] }</td>
+      </tr>
+      % endif
+      % if biblatex['firstname'] is not None :
+      <tr>
+        <th>first name:</th>
+        <td>${ biblatex['firstname'] }</td>
+      </tr>
+      % endif
+      % if biblatex['von'] is not None :
+      <tr>
+        <th>von:</th>
+        <td>${ biblatex['von'] }</td>
+      </tr>
+      % endif
+      % if biblatex['surname'] is not None :
+      <tr>
+        <th>last name:</th>
+        <td>${ biblatex['surname'] }</td>
+      </tr>
+      % endif
+      % if biblatex['jr'] is not None :
+      <tr>
+        <th>jr:</th>
+        <td>${ biblatex['jr'] }</td>
+      </tr>
+      % endif
+      % if biblatex['institute'] is not None :
+      <tr>
+        <th>institute:</th>
+        <td>${ biblatex['institute'] }</td>
+      </tr>
+      % endif
+      % if 'email' in biblatex and (biblatex['institute'] is not None) :
+      <tr>
+        <th>email:</th>
+        <td>
+          <a href="mailto:${ biblatex['email'] }">${ biblatex['email'] }</a>
+        </td>
+      </tr>
+      % endif
+      % if biblatex['url'] is not None :
+      <tr>
+        <th>url:</th>
+        <td>
+          <ul>
+          % for aUrl in biblatex['url'] :
+            <li><a href="${ aUrl }">${ aUrl }</a></li>
+          % endfor
+          </ul>
+        </td>
+      </tr>
+      % endif
+      % if papers is not None :
+     <tr>
+       <th>citeKeys:</th>
+        <td>
+          <ul>
+          % for citeKey, citeTitle, auxTitle in papers :
+            <li>
+              <a href="/refs/${ citeKey }">${ citeTitle }</a>
+              <br> ${ auxTitle }
+            </li>
+          % endfor
+          </ul>
+        </td>
+      </tr>
+      % endif
+    </table>
+  </article>
+
+  <hr>
+
+  <article class="author-content">
+    ${ bodyText }
+  </article>
+
+</div>
+</%block>

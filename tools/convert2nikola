@@ -7,6 +7,7 @@
 # NOTE: we make changes IN PLACE!!!
 
 import argparse
+import os
 import pathlib
 import sys
 
@@ -19,12 +20,58 @@ pagesDir = str(args.pagesDir)
 pagesDir = pathlib.Path(pagesDir)
 
 pages = list(pagesDir.glob("**/*.md"))
+pages.extend(list(pagesDir.glob("**/*.markdown")))
 pages.extend(list(pagesDir.glob("**/*.html")))
+
+pagesToFix = []
 
 for aPage in pages :
   print("working on {}".format(aPage))
   contents = aPage.read_text()
-  contents = contents.replace('layout: page',    'template: page.tmpl')
-  contents = contents.replace('layout: null',    'template: emptyPage.tmpl')
-  contents = contents.replace('layout: default', 'template: base.tmpl')
+  yamlFence = contents.find('---', 4)
+  #
+  # correct the layout/template
+  #
+  contents = contents.replace('layout: author',   'template: author.tmpl')
+  contents = contents.replace('layout: citation', 'template: citation.tmpl')
+  contents = contents.replace('layout: page',     'template: page.tmpl')
+  contents = contents.replace('layout: post',     'template: post.tmpl')
+  contents = contents.replace('layout: null',     'template: emptyPage.tmpl')
+  contents = contents.replace('layout: default',  'template: base.tmpl')
+  contents = contents.replace('status: publish',  'publish:  published')
+  #
+  # Check if we have duplicate yaml keys
+  #
+  firstType = contents.find(' type:')
+  if -1 < firstType and firstType < yamlFence :
+    if -1 < contents.find(' type:', firstType+5) :
+      lines = contents.split("\n")
+      for i in range(len(lines)) :
+        if lines[i].startswith(' type:') :
+          del lines[i]
+          break
+      pagesToFix.append(str(aPage))
+      contents = "\n".join(lines)
+  #
+  # Check to see if we need to add a date
+  #
+  if str(aPage).startswith('posts') :
+    theDate =  "-".join(aPage.name.split('-')[0:3])
+    dateIndex = contents.find('date:')
+    if -1 == dateIndex or yamlFence < dateIndex :
+      contents = contents[:yamlFence] + "date: {}\n".format(theDate) + contents[yamlFence:]
+  #
+  # Write out the corrected contents
+  #
   aPage.write_text(contents)
+  #
+  # fix 'markdown'
+  #
+  if aPage.suffix == '.markdown' :
+    os.system("git mv {} {}".format(
+      str(aPage), str(aPage).replace('.markdown', '.md')
+    ))
+
+print("The following pages need to be fixed!")
+for aPage in pagesToFix :
+  print(aPage)
