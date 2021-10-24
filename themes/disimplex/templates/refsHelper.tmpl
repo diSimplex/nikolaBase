@@ -110,8 +110,8 @@
 ## cite/citeKey
 <%def name="citeCiteKey(ignoredVarName)">
 ${ biblatex['citekey'] }
-<a href="/references/${ biblatex['docType'] }/${ citation2urlBase(biblatex['citekey']) }.pdf">pdf</a>
-<a href="/references/${ biblatex['docType'] }/${ citation2urlBase(biblatex['citekey']) }-parts.pdf">(parts)</a>
+<a href="/references/${ biblatex['docType'] }/${ citation2refUrl(biblatex['citekey']) }.pdf">pdf</a>
+<a href="/references/${ biblatex['docType'] }/${ citation2refUrl(biblatex['citekey']) }-parts.pdf">(parts)</a>
 </%def>
 
 ## cite/citeKeys

@@ -1,0 +1,12 @@
+[Core]
+name = new_cite
+module = newCite
+
+[Documentation]
+author = The diSimplex authors
+version = 1.0
+website = https://github.com/diSimplex
+description = Create a new reference citation
+
+[Nikola]
+PluginCategory = Command

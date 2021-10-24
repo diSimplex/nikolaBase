@@ -12,55 +12,9 @@ import yaml
 from nikola.plugin_categories import Task
 from nikola.utils import \
   LocaleBorg, get_theme_path_real, config_changed, LOGGER
-
-#########################################################################
-
-removeStrangeChars   = re.compile(r"[\'\",\.\{\} \t\n\r]+")
-removeMultipleDashes = re.compile(r"\-+")
-removeLeadingDashes  = re.compile(r"^\-+")
-removeTrailingDashes = re.compile(r"\-+$")
-
-def author2urlBase(authorName) :
-  authorFileName = authorName[:]
-  authorFileName = removeStrangeChars.sub('-', authorFileName)
-  authorFileName = removeMultipleDashes.sub('-', authorFileName)
-  authorFileName = removeLeadingDashes.sub('', authorFileName)
-  authorFileName = removeTrailingDashes.sub('', authorFileName)
-  return f"author/{authorFileName[0:2]}/{authorFileName}"
-
-def author2url(authorName) :
-  return author2urlBase(authorName)+'.html'
-
-removeLeadingDigitsWhiteSpace = re.compile(r"^[0-9]+[ \t]+")
-
-def citation2urlBase(citeKey) :
-  citeKeyLocal = removeLeadingDigitsWhiteSpace.sub('', citeKey)
-  return f"cite/{citeKeyLocal[0:2]}/{citeKeyLocal}"
-
-def citation2url(citeKey) :
-  return citation2urlBase(citeKey)+'.html'
-
-def md2ext(aPath, ext) :
-  aUrl = aPath
-  pathStr = str(aPath)
-  if pathStr.endswith('md') : aUrl = pathStr.removesuffix('md') + ext
-  return aUrl
-
-def md2html(aPath) :
-  return md2ext(aPath, 'html')
-
-def md2bib(aPath) :
-  return md2ext(aPath, 'bib')
-
-def md2lua(aPath) :
-  return md2ext(aPath, 'lua')
-
-def convertIndex2sortedList(anIndexDict) :
-  indexList = list(anIndexDict.values())
-  indexList.sort(key=lambda anIndexList : anIndexList[1])
-  return indexList
-
-#########################################################################
+from plugins.utils import \
+  author2urlBase, md2html, md2bib, md2lua, convertIndex2sortedList, \
+  author2url, citation2urlBase, citation2refUrl
 
 class RenderReferences(Task) :
   """Render the author/citeations from a simple reference database."""
@@ -202,6 +156,8 @@ class RenderReferences(Task) :
       biblatex['date'] = str(biblatex['date'])
     if 'year' in biblatex and biblatex['year'] is not None :
       biblatex['year'] = str(biblatex['year'])
+    if 'url' in biblatex and isinstance(biblatex['url'], str) :
+      biblatex['url'] = [ biblatex['url'] ]
 
     aRef             = self.filesDB[aPathStr]
     aRef['bodyText'] = bodyText
@@ -378,6 +334,7 @@ class RenderReferences(Task) :
     # Add our filters
     context['md2html']          = md2html
     context['author2url']       = author2url
+    context['citation2refUrl']  = citation2refUrl
     context['citation2urlBase'] = citation2urlBase
     context['yamlDump']         = yaml.dump
 
