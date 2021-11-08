@@ -121,6 +121,7 @@ def checkForCitation(citeKey) :
   anIndex = 1
   for aCitation in possibleCitations :
     print(f"{anIndex}: {aCitation}")
+    anIndex = anIndex + 1
   chosenIndex = ask("index (or return to add new citation)")
   try :
     chosenIndex = int(chosenIndex)
