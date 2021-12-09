@@ -563,3 +563,11 @@ GLOBAL_CONTEXT = {}
 # GLOBAL_CONTEXT as parameter when the template is about to be
 # rendered
 GLOBAL_CONTEXT_FILLER = []
+
+# Settings for the (boot)Reveal theme must be added to the global context.
+# subtheme selection:   beige/serif/simple/sky/night/default
+# transition selection: cube/page/concave/linear/none/default
+GLOBAL_CONTEXT.update({
+    'subtheme': 'simple',
+    'transition': 'none'
+})

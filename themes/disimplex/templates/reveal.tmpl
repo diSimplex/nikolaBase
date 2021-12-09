@@ -1,0 +1,33 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.tmpl"/>
+
+<%block name="extra_head">
+  <link rel="stylesheet" href="/assets/reveal/reset.css">
+  <link rel="stylesheet" href="/assets/reveal/reveal.css">
+  <link rel="stylesheet" href="/assets/reveal/theme/${post.meta('subtheme') or subtheme or 'simple'}.css" id="theme">
+</%block>
+
+<%block name="content">
+  ${post.text()}
+
+  <script src="/assets/reveal/reveal.js"></script>
+  <script src="/assets/reveal/plugin/zoom/zoom.js"></script>
+  <script src="/assets/reveal/plugin/notes/notes.js"></script>
+  <script src="/assets/reveal/plugin/search/search.js"></script>
+  <script src="/assets/reveal/plugin/markdown/markdown.js"></script>
+  <script src="/assets/reveal/plugin/highlight/highlight.js"></script>
+
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      history: true,
+      embedded: true,
+      transition: '${post.meta('transition') or transition or 'none'}',
+      plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+    })
+  </script>
+
+</%block>

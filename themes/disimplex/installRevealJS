@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This bash script uses wget to install the specified version of Reveal.JS
+
+revealJSVersion=4.2.1
+
+rm -rf /tmp/downloadRevealJS
+
+mkdir /tmp/downloadRevealJS
+
+pushd /tmp/downloadRevealJS
+
+wget https://github.com/hakimel/reveal.js/archive/refs/tags/${revealJSVersion}.tar.gz
+
+tar xvf ${revealJSVersion}.tar.gz
+
+popd
+
+rm -rf assets/reveal
+
+mv /tmp/downloadRevealJS/reveal.js-${revealJSVersion}/dist assets/reveal
+
+mv /tmp/downloadRevealJS/reveal.js-${revealJSVersion}/plugin assets/reveal/
+
+touch assets/reveal/version-${revealJSVersion}
