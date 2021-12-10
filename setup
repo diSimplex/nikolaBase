@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# This bash script installs all of the required python packages using the 
+# pipx/pip virtualized tools 
+
+pipx install nikola[extras]
+pipx runpip nikola install pyyaml
+pipx runpip nikola install msgpack
