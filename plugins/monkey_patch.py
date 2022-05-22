@@ -4,10 +4,25 @@
 
 import yaml
 
+import lxml
+
 from blinker import signal
 
+from nikola.post import Post
 from nikola.plugin_categories import SignalHandler
 from nikola.utils import LOGGER
+
+origPostText = Post.text
+def newPostText(self, *args, **kwargs) :
+  try :
+    result = origPostText(self, *args, **kwargs)
+  except lxml.etree.ParserError as e :
+    if str(e) == "Document is empty":
+      return ""
+    # let other errors raise
+    raise
+  return result
+Post.text = newPostText
 
 class MonkeyPatches(SignalHandler) :
   """Apply any monkey patches to Nikola (HERE BE DRAGONS!)."""
