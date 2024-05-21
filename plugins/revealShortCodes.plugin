@@ -9,4 +9,4 @@ website = https://github.com/diSimplex
 description = Add the Reveal.js specific short codes
 
 [Nikola]
-PluginCategory = Misc
+PluginCategory = ShortcodePlugin

@@ -10,49 +10,49 @@
 
   <article class="author-fields">
     <table>
-      % if biblatex['cleanname'] is not None :
+      % if 'cleanname' in biblatex and biblatex['cleanname'] is not None :
       <tr>
         <th>clean name:</th>
         <td>${ biblatex['cleanname'] }</td>
       </tr>
        % endif
-      % if biblatex['synonymOf'] is not None :
+      % if 'synonymOf' in biblatex and biblatex['synonymOf'] is not None :
       <tr>
         <th>synonym of:</th>
         <td>${ biblatex['synonymOf'] }</td>
       </tr>
       % endif
-      % if biblatex['firstname'] is not None :
+      % if 'firstname' in biblatex and biblatex['firstname'] is not None :
       <tr>
         <th>first name:</th>
         <td>${ biblatex['firstname'] }</td>
       </tr>
       % endif
-      % if biblatex['von'] is not None :
+      % if 'von' in biblatex and biblatex['von'] is not None :
       <tr>
         <th>von:</th>
         <td>${ biblatex['von'] }</td>
       </tr>
       % endif
-      % if biblatex['surname'] is not None :
+      % if 'surname' in biblatex and biblatex['surname'] is not None :
       <tr>
         <th>last name:</th>
         <td>${ biblatex['surname'] }</td>
       </tr>
       % endif
-      % if biblatex['jr'] is not None :
+      % if 'jr' in biblatex and biblatex['jr'] is not None :
       <tr>
         <th>jr:</th>
         <td>${ biblatex['jr'] }</td>
       </tr>
       % endif
-      % if biblatex['institute'] is not None :
+      % if 'institute' in biblatex and biblatex['institute'] is not None :
       <tr>
         <th>institute:</th>
         <td>${ biblatex['institute'] }</td>
       </tr>
       % endif
-      % if 'email' in biblatex and (biblatex['institute'] is not None) :
+      % if 'email' in biblatex and (biblatex['email'] is not None) :
       <tr>
         <th>email:</th>
         <td>
@@ -60,7 +60,7 @@
         </td>
       </tr>
       % endif
-      % if biblatex['url'] is not None :
+      % if 'url' in biblatex and biblatex['url'] is not None :
       <tr>
         <th>url:</th>
         <td>

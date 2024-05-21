@@ -53,6 +53,7 @@ class RenderPartials(Task) :
       depsDict['navigation_alt_links'] = depsDict['global']['navigation_alt_links'](lang)
 
       for aPartial in diSimpThemeDir.glob('**/*.partial.tmpl') :
+        print(f"Updating partial: {aPartial}")
         outputName = os.path.join(
           self.site.config['OUTPUT_FOLDER'],
           'partials',

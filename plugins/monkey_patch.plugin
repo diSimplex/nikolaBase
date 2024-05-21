@@ -9,4 +9,4 @@ website = https://github.com/diSimplex
 description = Apply any monkey patches to Nikola (HERE BE DRAGONS!)
 
 [Nikola]
-PluginCategory = Misc
+PluginCategory = SignalHandler

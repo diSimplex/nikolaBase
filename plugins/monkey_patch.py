@@ -31,7 +31,7 @@ class MonkeyPatches(SignalHandler) :
 
   def doTheMonkeyPatches(self, site) :
     LOGGER.debug("Time to DO the monkey patches!")
-    for plugin_info in site.plugin_manager.getPluginsOfCategory("Taxonomy") :
+    for plugin_info in site.plugin_manager.get_plugins_of_category("Taxonomy") :
       if plugin_info.name == 'classify_indexes' :
         if 'THIS_IS_A_BLOG_SITE' not in site.config :
           plugin_info.plugin_object.apply_to_posts = False
